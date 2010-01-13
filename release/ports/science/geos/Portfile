@@ -1,0 +1,64 @@
+# $Id: Portfile 58199 2009-09-24 00:55:25Z jann@macports.org $
+
+PortSystem       1.0
+
+name             geos
+version          3.1.1
+categories       science
+platforms        darwin
+maintainers      gaige.net:opendarwin
+
+description      GEOS Geometry Engine - Open Source
+long_description \
+  A C++ port of the Java Topology Suite, providing OpenGIS Simple \
+  Features for SQL spatial predicate functions and spatial operators, \
+  as well as specific JTS topology functions. Used by PostGIS.
+
+homepage         http://trac.osgeo.org/geos/
+master_sites     http://download.osgeo.org/geos/
+use_bzip2        yes
+
+checksums        md5 196f4424aa4ef94476e6886d3a964fb6 \
+                 sha1 cafb76a3e5fbcd7d9588d3fdcec8fa4fcd8b9fa4 \
+                 rmd160 a3254a7a8cdfccaefaa2f438577f4ebd0c8929ac
+
+test.run         yes
+test.cmd         make
+test.target      check
+
+use_parallel_build yes
+
+livecheck.type   regex
+livecheck.url    ${homepage}
+livecheck.regex  {geos-(\d+(?:\.\d+)*).tar.bz2}
+
+variant ruby conflicts ruby186 ruby19 description {add Ruby 1.8.7 support} {
+    depends_build-append    port:ruby bin:swig:swig
+    configure.args-append   --enable-ruby
+}
+
+variant ruby186 conflicts ruby ruby19 description {add Ruby 1.8.6 support} {
+    depends_build-append    port:ruby186 bin:swig:swig
+    configure.args-append   --enable-ruby
+}
+
+variant ruby19 conflicts ruby ruby186 description {add Ruby 1.9 support} {
+    depends_build-append    port:ruby19 bin:swig:swig
+    configure.args-append   --enable-ruby
+}
+
+variant python24 conflicts python25 python26 description {add Python 2.4 support} {
+    depends_build-append    port:python24 bin:swig:swig
+    configure.args-append   --enable-python
+}
+
+variant python25 conflicts python24 python26 description {add Python 2.5 support} {
+    depends_build-append    port:python25 bin:swig:swig
+    configure.args-append   --enable-python
+}
+
+variant python26 conflicts python24 python25 description {add Python 2.6 support} {
+    depends_build-append    port:python26 bin:swig:swig
+    configure.args-append   --enable-python
+}
+

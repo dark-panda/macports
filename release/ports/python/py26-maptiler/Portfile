@@ -1,0 +1,25 @@
+# $Id$
+
+PortSystem         1.0
+PortGroup          python26 1.0
+
+name               py26-maptiler
+version            1.0-r37
+distname           Maptiler-${version}
+maintainers        nomaintainer
+platforms          darwin
+
+description        Python module for tiling slippy maps
+long_description   ${description}
+
+homepage           http://www.maptiler.org/
+
+master_sites       ${homepage}
+
+fetch.type         svn
+svn.url            http://maptiler.googlecode.com/svn/trunk/
+svn.tag            37
+worksrcdir         trunk
+
+# depends_lib        port:py26-wxpython port:gdal
+
