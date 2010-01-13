@@ -1,0 +1,5 @@
+*.kpf
+*~
+.DS_Store
+*.orig
+.*.swp
