@@ -62,3 +62,11 @@ variant python26 conflicts python24 python25 description {add Python 2.6 support
     configure.args-append   --enable-python
 }
 
+if {[variant_isset ruby] || [variant_isset ruby186] || [variant_isset ruby19]} {
+	PortGroup ruby 1.0
+	post-destroot {
+		set ruby_archlib [ruby.extract_config sitearchdir]
+		ln -s ${ruby_archlib}/geos.so ${ruby_archlib}/geos.bundle
+	}
+}
+
