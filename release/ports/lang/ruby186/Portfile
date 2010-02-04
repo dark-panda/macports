@@ -3,7 +3,7 @@
 PortSystem 1.0
 
 name			ruby186
-version			1.8.6-p368
+version			1.8.6-p383
 
 categories		lang ruby
 maintainers		kimuraw openmaintainer
@@ -22,9 +22,9 @@ use_bzip2		yes
 
 dist_subdir		ruby
 distname		ruby-${version}
-checksums		md5     623447c6d8c973193aae565a5538ccfc \
-				sha1    7a2cfb9f0803d21221e7d066837037bbbc50b6ad \
-				rmd160  fba1ef4f6b2b069f4fcd4734b09fc36197138929
+checksums		md5     a48703cd982b9f0e3002700a50b0e88e \
+				sha1    225a28956406b3bd8c5839a391131936ddce4eb9 \
+				rmd160  d7240d4589d3c15c69ae03ffcfbfae1b650911d3
 
 platforms		darwin
 

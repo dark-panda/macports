@@ -1,16 +1,7 @@
---- gc.c	2009-03-27 06:21:06.000000000 -0400
-+++ /Users/jay/Setup/ruby/ruby-git/gc.c	2010-01-19 15:40:02.000000000 -0500
-@@ -2,8 +2,8 @@
- 
-   gc.c -
- 
--  $Author: shyouhei $
--  $Date: 2009-03-27 19:21:06 +0900 (Fri, 27 Mar 2009) $
-+  $Author$
-+  $Date$
-   created at: Tue Oct  5 09:44:46 JST 1993
- 
-   Copyright (C) 1993-2003 Yukihiro Matsumoto
+diff --git gc.c gc.c
+index 66ce263..f99dd5b 100644
+--- gc.c
++++ gc.c
 @@ -22,8 +22,16 @@
  #include <setjmp.h>
  #include <sys/types.h>
@@ -245,14 +236,14 @@
 -static int heap_slots = HEAP_MIN_SLOTS;
 +static int heap_min_slots = 10000;
 +static int heap_slots = 10000;
-+
+ 
+-#define FREE_MIN  4096
 +static int heap_free_min = 4096;
 +static int heap_slots_increment = 10000;
 +static double heap_slots_growth_factor = 1.8;
 +
 +static long initial_malloc_limit = GC_MALLOC_LIMIT;
- 
--#define FREE_MIN  4096
++
 +static int verbose_gc_stats = Qfalse;
 +
 +static FILE* gc_data_file = NULL;
@@ -582,6 +573,15 @@
      /* clear finalization list */
      if (final_list) {
  	deferred_final_list = final_list;
+@@ -1316,7 +1711,7 @@ obj_free(obj)
+ 	    VALUE *vars = RANY(obj)->as.scope.local_vars-1;
+ 	    if (!(RANY(obj)->as.scope.flags & SCOPE_CLONE) && vars[0] == 0)
+ 		RUBY_CRITICAL(free(RANY(obj)->as.scope.local_tbl));
+-            if ((RANY(obj)->as.scope.flags & (SCOPE_MALLOC|SCOPE_CLONE)) == SCOPE_MALLOC)
++	    if ((RANY(obj)->as.scope.flags & (SCOPE_MALLOC|SCOPE_CLONE)) == SCOPE_MALLOC)
+ 		RUBY_CRITICAL(free(vars));
+ 	}
+ 	break;
 @@ -1386,6 +1781,7 @@ garbage_collect()
      struct gc_list *list;
      struct FRAME * volatile frame; /* gcc 2.7.2.3 -O2 bug??  */
@@ -631,7 +631,7 @@
      add_heap();
  }
  
-@@ -2100,6 +2516,34 @@ rb_obj_id(VALUE obj)
+@@ -2101,6 +2517,34 @@ rb_obj_id(VALUE obj)
      return (VALUE)((long)obj|FIXNUM_FLAG);
  }
  
@@ -666,7 +666,7 @@
  /*
   *  The <code>GC</code> module provides an interface to Ruby's mark and
   *  sweep garbage collection mechanism. Some of the underlying methods
-@@ -2117,6 +2561,16 @@ Init_GC()
+@@ -2118,6 +2562,16 @@ Init_GC()
      rb_define_singleton_method(rb_mGC, "disable", rb_gc_disable, 0);
      rb_define_method(rb_mGC, "garbage_collect", rb_gc_start, 0);
  
@@ -683,7 +683,7 @@
      rb_mObSpace = rb_define_module("ObjectSpace");
      rb_define_module_function(rb_mObSpace, "each_object", os_each_obj, -1);
      rb_define_module_function(rb_mObSpace, "garbage_collect", rb_gc_start, 0);
-@@ -2124,6 +2578,8 @@ Init_GC()
+@@ -2125,6 +2579,8 @@ Init_GC()
      rb_define_module_function(rb_mObSpace, "remove_finalizer", rm_final, 1);
      rb_define_module_function(rb_mObSpace, "finalizers", finals, 0);
      rb_define_module_function(rb_mObSpace, "call_finalizer", call_final, 1);
@@ -692,20 +692,11 @@
  
      rb_define_module_function(rb_mObSpace, "define_finalizer", define_final, -1);
      rb_define_module_function(rb_mObSpace, "undefine_finalizer", undefine_final, 1);
---- intern.h	2009-01-22 01:18:48.000000000 -0500
-+++ /Users/jay/Setup/ruby/ruby-git/intern.h	2010-01-19 15:38:33.000000000 -0500
-@@ -2,8 +2,8 @@
- 
-   intern.h -
- 
--  $Author: shyouhei $
--  $Date: 2009-01-22 15:18:48 +0900 (Thu, 22 Jan 2009) $
-+  $Author$
-+  $Date$
-   created at: Thu Jun 10 14:22:17 JST 1993
- 
-   Copyright (C) 1993-2003 Yukihiro Matsumoto
-@@ -255,6 +255,15 @@ void rb_gc_call_finalizer_at_exit _((voi
+diff --git intern.h intern.h
+index 1c55a07..a0919ba 100644
+--- intern.h
++++ intern.h
+@@ -255,6 +255,15 @@ void rb_gc_call_finalizer_at_exit _((void));
  VALUE rb_gc_enable _((void));
  VALUE rb_gc_disable _((void));
  VALUE rb_gc_start _((void));
