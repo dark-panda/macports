@@ -1,9 +1,10 @@
-# $Id: Portfile 58199 2009-09-24 00:55:25Z jann@macports.org $
+# $Id: Portfile 62643 2010-01-13 12:55:44Z nox@macports.org $
 
 PortSystem       1.0
 
 name             geos
-version          3.1.1
+version          3.2.0
+license          LGPL-2.1
 categories       science
 platforms        darwin
 maintainers      gaige.net:opendarwin
@@ -18,9 +19,16 @@ homepage         http://trac.osgeo.org/geos/
 master_sites     http://download.osgeo.org/geos/
 use_bzip2        yes
 
-checksums        md5 196f4424aa4ef94476e6886d3a964fb6 \
-                 sha1 cafb76a3e5fbcd7d9588d3fdcec8fa4fcd8b9fa4 \
-                 rmd160 a3254a7a8cdfccaefaa2f438577f4ebd0c8929ac
+checksums        md5     bfad7129680f0107b6ca9a2b92a2c440 \
+                 sha1    e6925763fb06fa6a7f358ede49bb89f96535b3ef \
+                 rmd160  cdbd10d524164cd11b73a3af39ce15d021dfcaef
+
+post-destroot {
+    set docdir ${prefix}/share/doc/${name}
+    xinstall -d ${destroot}${docdir}
+    xinstall -m 644 -W ${worksrcpath} AUTHORS COPYING ChangeLog NEWS README \
+        TODO ${destroot}${docdir}
+}
 
 test.run         yes
 test.cmd         make
@@ -66,7 +74,7 @@ if {[variant_isset ruby] || [variant_isset ruby186] || [variant_isset ruby19]} {
 	PortGroup ruby 1.0
 	post-destroot {
 		set ruby_archlib [ruby.extract_config sitearchdir]
-		ln -s ${ruby_archlib}/geos.so ${ruby_archlib}/geos.bundle
+		ln -fs ${ruby_archlib}/geos.so ${ruby_archlib}/geos.bundle
 	}
 }
 
