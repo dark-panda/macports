@@ -5,7 +5,7 @@ PortGroup		ruby 1.0
 
 name			rb-rubygems
 categories		ruby devel
-version			1.3.6
+version			1.3.7
 #revision		0
 
 homepage		http://www.rubygems.org
@@ -19,9 +19,9 @@ description		a package management framework for Ruby
 long_description	RubyGems is the Ruby standard for publishing and \
 					managing third party libraries.
 
-checksums		md5     789ca8e9ad1d4d3fe5f0534fcc038a0d \
-			sha1    ad6606d1eae82cb69381e4f5b2022d2f3f2733f3 \
-			rmd160  f2aa5155a79f07a3f9106e90a4d1e4d39d31cc5a
+checksums		md5     e85cfadd025ff6ab689375adbf344bbe \
+			sha1    68ad2970963db9893b76acc8777be72a77c4bee4 \
+			rmd160  2ea8e16d1535216045798258603d5f2f9e3dbfea
 
 
 patchfiles		patch-lib_rubygems_commands_setup_command.rb.diff
