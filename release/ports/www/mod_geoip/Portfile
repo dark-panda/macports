@@ -1,0 +1,41 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:filetype=tcl:et:sw=4:ts=4:sts=4
+# $Id: $
+
+PortSystem 1.0
+
+name			mod_geoip
+version			1.2.7
+categories		www
+platforms		darwin
+maintainers		nomaintainer
+description		mod_geoip is an apache2 module that detects for stuff via GeoIP databases.
+long_description	${description}
+
+homepage		http://www.maxmind.com/
+master_sites	http://geolite.maxmind.com/download/geoip/api/mod_geoip2/
+
+distfiles mod_geoip2_${version}.tar.gz
+
+checksums		\
+  md5       76514ad0e8adb8cd8231c5e3646d03fd \
+  sha1      0b23848d459415d979171efbb635e67568ae2816 \
+  rmd160    53892855810bd6a6578a3ae82d6a3acaf13173d3
+
+depends_lib		port:apache2
+
+use_configure	no
+
+worksrcdir      mod_geoip2_${version}
+
+build.cmd		${prefix}/apache2/bin/apxs
+build.target
+build.args		-L${prefix}/lib -lGeoIP -c -o mod_geoip.so mod_geoip.c
+
+destroot {
+	xinstall -m 755 -d ${destroot}${prefix}/apache2/modules \
+		${destroot}${prefix}/share/doc/${name}
+	xinstall -m 755 ${worksrcpath}/.libs/mod_geoip.so \
+		${destroot}${prefix}/apache2/modules
+	xinstall -m 644 -W ${worksrcpath} Changes INSTALL README README.php \
+		${destroot}${prefix}/share/doc/${name}
+}
