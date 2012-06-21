@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           archcheck 1.0
 
 name                postgis90
-version             1.5.3
+version             1.5.4
 revision            0
 categories          databases
 platforms           darwin
@@ -28,9 +28,9 @@ master_sites        ${homepage}download/
 distname            postgis-${version}
 distfiles           postgis-${version}.tar.gz
 
-checksums           md5     05a61df5e1b78bf51c9ce98bea5526fc \
-                    sha1    e8c572e0258ba760a67b7f717bdc8321b9f6cd58 \
-                    rmd160  e30275890b175cbe1d70d5899cbe45ec34ddbafb
+checksums           md5     693d47b55f7175c8a28471687f85b742 \
+                    sha1    60facf2166e2c6b3dcf3f17feef4bc33fc8f5e9a \
+                    rmd160  cfda2a6472c283aa151e3c0bceb47287059d168b
 
 depends_build \
     port:docbook-xsl \
