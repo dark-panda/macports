@@ -79,7 +79,8 @@ depends_lib-append  port:postgresql91
 archcheck.files-append \
     lib/postgresql91/libpq.dylib
 
-configure.args-append   --libdir=${prefix}/lib/postgresql91 \
+configure.args-append   --includedir=${prefix}/include/postgresql91 \
+                        --libdir=${prefix}/lib/postgresql91 \
                         --with-pgconfig=${prefix}/lib/postgresql91/bin/pg_config
 
 build.args-append   PGSQL_DOCDIR=${destroot}${prefix}/share/doc/postgresql91 \
