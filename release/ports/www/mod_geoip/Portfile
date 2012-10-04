@@ -3,39 +3,56 @@
 
 PortSystem 1.0
 
-name			mod_geoip
-version			1.2.7
-categories		www
-platforms		darwin
-maintainers		nomaintainer
-description		mod_geoip is an apache2 module that detects for stuff via GeoIP databases.
-long_description	${description}
+name                mod_geoip
+version             1.2.7
+categories          www
+license             Apache
+platforms           darwin
+maintainers         nomaintainer
+description         Apache 2 module for detecting location by IP address.
+long_description    ${description}
 
-homepage		http://www.maxmind.com/
-master_sites	http://geolite.maxmind.com/download/geoip/api/mod_geoip2/
+homepage            http://www.maxmind.com/app/mod_geoip
+master_sites        http://www.maxmind.com/download/geoip/api/mod_geoip2/
 
-distfiles mod_geoip2_${version}.tar.gz
+distfiles           ${name}2_${version}.tar.gz
 
-checksums		\
-  md5       76514ad0e8adb8cd8231c5e3646d03fd \
-  sha1      0b23848d459415d979171efbb635e67568ae2816 \
-  rmd160    53892855810bd6a6578a3ae82d6a3acaf13173d3
+checksums           md5     76514ad0e8adb8cd8231c5e3646d03fd \
+                    sha1    0b23848d459415d979171efbb635e67568ae2816 \
+                    rmd160  53892855810bd6a6578a3ae82d6a3acaf13173d3
 
-depends_lib		port:apache2
+depends_lib         port:apache2 \
+                    port:libgeoip
 
-use_configure	no
+use_configure       no
+worksrcdir          ${name}2_${version}
 
-worksrcdir      mod_geoip2_${version}
-
-build.cmd		${prefix}/apache2/bin/apxs
+build.cmd           ${prefix}/apache2/bin/apxs
+build.args          -I ${prefix}/include \
+                    -L ${prefix}/lib \
+                    -l GeoIP \
+                    -c -o ${name}.so ${name}.c
 build.target
-build.args		-L${prefix}/lib -lGeoIP -c -o mod_geoip.so mod_geoip.c
+
+destroot.violate_mtree yes
 
 destroot {
-	xinstall -m 755 -d ${destroot}${prefix}/apache2/modules \
-		${destroot}${prefix}/share/doc/${name}
-	xinstall -m 755 ${worksrcpath}/.libs/mod_geoip.so \
-		${destroot}${prefix}/apache2/modules
-	xinstall -m 644 -W ${worksrcpath} Changes INSTALL README README.php \
-		${destroot}${prefix}/share/doc/${name}
+    xinstall -m 755 -d ${destroot}${prefix}/apache2/modules \
+        ${destroot}${prefix}/apache2/conf/extra \
+        ${destroot}${prefix}/share/doc/${name}
+    xinstall -m 644 ${worksrcpath}/.libs/${name}.so \
+        ${destroot}${prefix}/apache2/modules
+    xinstall -m 644 -c ${filespath}/httpd-geoip.conf \
+        ${destroot}${prefix}/apache2/conf/extra
+    xinstall -m 644 -W ${worksrcpath} Changes README \
+        ${destroot}${prefix}/share/doc/${name}
+}
+
+post-install {
+    ui_msg "########################################################"
+    ui_msg "# To enable mod_geoip add"
+    ui_msg "#  LoadModule geoip_module modules/mod_geoip.so"
+    ui_msg "# to your apache2 config file:"
+    ui_msg "#  ${prefix}/apache2/conf/httpd.conf"
+    ui_msg "########################################################"
 }
