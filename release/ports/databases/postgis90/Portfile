@@ -62,7 +62,7 @@ configure.cflags-append \
 build.target-append comments
 build.args          ICONV_LDFLAGS='-L${prefix}/lib -liconv'
 
-destroot.target-append docs-install comments-install
+destroot.target-append comments-install
 
 post-patch {
     set args {
