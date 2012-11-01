@@ -23,7 +23,7 @@ long_description \
     conformance testing at version 1.0.
 
 homepage            http://postgis.refractions.net/
-master_sites        ${homepage}download/
+master_sites        http://download.osgeo.org/postgis/source/
 
 distname            postgis-${version}
 distfiles           postgis-${version}.tar.gz
