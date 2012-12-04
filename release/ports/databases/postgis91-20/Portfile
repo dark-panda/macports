@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           archcheck 1.0
 
 name                postgis91-20
-version             2.0.1
+version             2.0.2
 revision            0
 categories          databases
 platforms           darwin
@@ -23,15 +23,15 @@ long_description \
     conformance testing at version 1.0.
 
 homepage            http://postgis.refractions.net/
-master_sites        ${homepage}download/
+master_sites        http://download.osgeo.org/postgis/source/
 patchfiles          patch-loader-Makefile.in.diff
 
 distname            postgis-${version}
 distfiles           postgis-${version}.tar.gz
 
-checksums           md5     7af9ce5f7dfb22d81fea7f041e674497 \
-                    sha1    31db797a835f14470f9e1183fe8fd2ba7b99aadf  \
-                    rmd160  2c7e27aaf0b6c071254b77b118ab6d4e9b023c1f
+checksums           md5     f11e7b6258a9b37a268df531b692f892 \
+                    sha1    a3fe6c4ea4c50dc3f586e804c863ba5eff23bf06 \
+                    rmd160  4756125b51268ff4d7a4b50d6eeb6e66d0135bb9
 
 depends_build \
     port:docbook-xsl \
