@@ -1,0 +1,30 @@
+# $Id: $
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.8 5.10 5.12 5.14 5.16
+perl5.setup         lvalue 0.21
+revision            1
+license             {Artistic-1 GPL}
+maintainers         nomaintainer
+distfiles           Lvalue-${perl5.moduleversion}.tar.gz
+master_sites        http://search.cpan.org/CPAN/authors/id/A/AS/ASG/
+platforms           darwin
+worksrcdir          Lvalue-${perl5.moduleversion}
+
+description \
+  Lvalue - add lvalue getters and setters to existing objects
+
+long_description \
+  Lvalue - add lvalue getters and setters to existing objects
+
+checksums \
+  md5     92081b0885484876434786c6bd366f40 \
+  sha1    96fe7ec244184207ad28cc73cbab51b1060a52ab \
+  rmd160  76fa9c3bc5561e0d38fc4e8def825db37539344f
+
+if {${perl5.major} != ""} {
+  depends_lib-append    port:p${perl5.major}-sub-exporter
+  supported_archs noarch
+}
