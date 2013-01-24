@@ -1,0 +1,31 @@
+# $Id: $
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.8 5.10 5.12 5.14 5.16
+perl5.setup         JSON-Path 0.203
+revision            1
+license             {Artistic-1 GPL}
+maintainers         nomaintainer
+distfiles           JSON-Path-${perl5.moduleversion}.tar.gz
+master_sites        http://search.cpan.org/CPAN/authors/id/T/TO/TOBYINK/
+platforms           darwin
+worksrcdir          JSON-Path-${perl5.moduleversion}
+
+description \
+  Perl5 implementation for JSONPath.
+
+long_description \
+  Perl5 implementation for JSONPath.
+
+checksums \
+  md5 7eba0427f83c6f4a7edb201551be6aa5 \
+  sha1 cbfacdfb975f53c769956266871aa6ea9c04a9db \
+  rmd160 9b0c3f8c7d157157945c3f296fda224939ca577d
+
+if {${perl5.major} != ""} {
+  depends_lib-append    port:p${perl5.major}-json \
+                        port:p${perl5.major}-lvalue
+  supported_archs noarch
+}
