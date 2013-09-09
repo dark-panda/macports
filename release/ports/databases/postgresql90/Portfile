@@ -57,6 +57,10 @@ configure.args	--sysconfdir=${prefix}/etc/${name} \
 				--with-ossp-uuid
 configure.cppflags-append	-I${prefix}/include/ossp
 
+set major_version 9
+set minor_version 0
+set short_version ${major_version}${minor_version}
+
 # building psql with clang causes segfault on query; see #31717
 if {${configure.compiler} == "clang" && [vercmp ${xcodeversion} 4.4] < 0} {
     configure.compiler llvm-gcc-4.2
@@ -82,7 +86,7 @@ test.target		check
 
 livecheck.type	regex
 livecheck.url	${homepage}
-livecheck.regex	(9\\.0\\.\[.0-9\]+)
+livecheck.regex	(${major_version}\\.${minor_version}\\.\[.0-9\]+)
 
 platform darwin 12 {
     patchfiles-append   postgresql-uuid-ossp.patch
@@ -109,23 +113,25 @@ post-build {
 }
 
 post-destroot {
+	global short_version
+
 	foreach contrib ${build_contribs} {
 		system "echo contrib: \"${contrib}\""
 		system "cd ${worksrcpath}/contrib/${contrib}/ && \
 			${destroot.cmd} install ${destroot.destdir} && touch DONE"
 	}
-	system "cd ${destroot}${prefix}/bin && ln -sf ${libdir}/bin/psql psql90"
+	system "cd ${destroot}${prefix}/bin && ln -sf ${libdir}/bin/psql psql${short_version}"
 	file delete -force ${destroot}${prefix}/share/doc/postgresql \
 		${destroot}${prefix}/share/man
 
 	reinplace -E "s#-arch\[\[:space:\]\]+\[\[:alnum:\]_\]+##g" \
-	    ${destroot}${prefix}/lib/postgresql90/pgxs/src/Makefile.global
+	    ${destroot}${prefix}/lib/postgresql${short_version}/pgxs/src/Makefile.global
 
 	reinplace -E "s#^CFLAGS =#CFLAGS +=#g" \
-	    ${destroot}${prefix}/lib/postgresql90/pgxs/src/Makefile.global
+	    ${destroot}${prefix}/lib/postgresql${short_version}/pgxs/src/Makefile.global
 
 	reinplace -E "s#^(\[\[:space:\]\]+)LDFLAGS =#\\1LDFLAGS +=#g" \
-	    ${destroot}${prefix}/lib/postgresql90/pgxs/src/Makefile.global
+	    ${destroot}${prefix}/lib/postgresql${short_version}/pgxs/src/Makefile.global
 }
 
 select.group    postgresql
