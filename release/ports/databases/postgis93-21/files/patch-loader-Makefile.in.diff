@@ -1,0 +1,15 @@
+--- loader/Makefile.in.orig	2011-07-20 12:09:48.000000000 -0400
++++ loader/Makefile.in	2011-07-20 12:10:07.000000000 -0400
+@@ -26,9 +26,9 @@ CC=@CC@
+ CFLAGS=@CFLAGS@ @PICFLAGS@ @WARNFLAGS@
+
+ # Filenames with extension as determined by the OS
+-PGSQL2SHP-CLI=pgsql2shp@EXESUFFIX@
+-SHP2PGSQL-CLI=shp2pgsql@EXESUFFIX@
+-SHP2PGSQL-GUI=shp2pgsql-gui@EXESUFFIX@
++PGSQL2SHP-CLI=pgsql2shp-2.1@EXESUFFIX@
++SHP2PGSQL-CLI=shp2pgsql-2.1@EXESUFFIX@
++SHP2PGSQL-GUI=shp2pgsql-gui-2.1@EXESUFFIX@
+
+ # PostgreSQL frontend CPPFLAGS and LDFLAGS (for compiling and linking with libpq)
+ PGSQL_FE_CPPFLAGS=@PGSQL_FE_CPPFLAGS@
