@@ -237,6 +237,7 @@ array set variant_list {
     90  9.0
     91  9.1
     92  9.2
+    93  9.3
 }
 
 foreach {k v} [array get variant_list] {
