@@ -58,7 +58,7 @@ configure.args	--sysconfdir=${prefix}/etc/${name} \
 configure.cppflags-append	-I${prefix}/include/ossp
 
 set major_version 9
-set minor_version 0
+set minor_version 2
 set short_version ${major_version}${minor_version}
 
 # building psql with clang causes segfault on query; see #31717
