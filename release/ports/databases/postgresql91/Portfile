@@ -5,7 +5,7 @@ PortSystem 1.0
 PortGroup select 1.0
 
 name			postgresql91
-version			9.1.12
+version			9.1.13
 
 categories		databases
 platforms		darwin
@@ -23,9 +23,9 @@ master_sites		http://ftp3.de.postgresql.org/pub/Mirrors/ftp.postgresql.org/sourc
 			postgresql:source/v${version}/
 distname		postgresql-${version}
 
-checksums           rmd160  124902b260b32311550696858ff437eaddcd46ab \
-                    sha256  0b267ebab5feb39ad6ef945b9588787886e7f7e5284467921d18cc7b76bcb383 \
-                    md5     a14eb8a602af44f1827a9ecf928e7b44
+checksums           rmd160  1380aead164062393fe758d323e1d9d22118155a \
+                    sha256  20f8aa5dfcb47688ca6b6c41340cac61712d9cf87c34d58b0a75bb2f85d89b7f \
+                    md5     f50e201b4ef7e0581bf32a1a32c9f14c
 
 use_bzip2		yes
 
