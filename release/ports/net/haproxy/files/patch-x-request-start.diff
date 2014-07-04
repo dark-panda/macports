@@ -1,0 +1,42 @@
+--- include/types/proxy.h
++++ include/types/proxy.h
+@@ -151,7 +151,8 @@ enum pr_mode {
+ #define PR_O2_EXP_RSTR  0x02000000      /* http-check expect rstring */
+ #define PR_O2_EXP_TYPE  0x03800000      /* mask for http-check expect type */
+ #define PR_O2_EXP_INV   0x04000000      /* http-check expect !<rule> */
+-/* unused: 0x08000000 */
++/* XXX - Macports custom options - uses the previously unused value of 0x08000000 */
++#define PR_O2_X_REQUEST_START 0x08000000  /* append X-Request-Start */
+
+ /* server health checks */
+ #define PR_O2_CHK_NONE  0x00000000      /* no L7 health checks configured (TCP by default) */
+--- src/cfgparse.c
++++ src/cfgparse.c
+@@ -181,6 +181,9 @@ static const struct cfg_opt cfg_opts2[] =
+ 	{ "http-use-proxy-header",        PR_O2_USE_PXHDR, PR_CAP_FE, 0, PR_MODE_HTTP },
+ 	{ "http-pretend-keepalive",       PR_O2_FAKE_KA,   PR_CAP_FE|PR_CAP_BE, 0, PR_MODE_HTTP },
+ 	{ "http-no-delay",                PR_O2_NODELAY,   PR_CAP_FE|PR_CAP_BE, 0, PR_MODE_HTTP },
++
++	/* XXX - Macports */
++	{ "http-x-request-start",         PR_O2_X_REQUEST_START, PR_CAP_FE, 0, PR_MODE_HTTP },
+ 	{ NULL, 0, 0, 0 }
+ };
+
+--- src/proto_http.c
++++ src/proto_http.c
+@@ -4466,6 +4466,14 @@ int http_process_request(struct session *s, struct channel *req, int an_bit)
+ 			http_change_connection_header(txn, msg, want_flags);
+ 	}
+
++	/* XXX - Macports - Add the `X-Request-Start` header. */
++	if (s->fe->options2 & PR_O2_X_REQUEST_START) {
++		char tmpbuf[40];
++		unsigned long mstime = (now.tv_sec * 1000) + (now.tv_usec / 1000);
++		snprintf(tmpbuf, sizeof(tmpbuf), "X-Request-Start: %ld", mstime);
++	  if (unlikely(http_header_add_tail(&txn->req, &txn->hdr_idx, tmpbuf) < 0))
++			goto return_bad_req;
++	}
+
+ 	/* If we have no server assigned yet and we're balancing on url_param
+ 	 * with a POST request, we may be interested in checking the body for
+
