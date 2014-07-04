@@ -4,7 +4,7 @@
 PortSystem          1.0
 
 name                haproxy
-version             1.4.25
+version             1.5.1
 set branch          [join [lrange [split ${version} .] 0 1] .]
 categories          net
 platforms           darwin
@@ -25,8 +25,8 @@ long_description    HAproxy is a high-performance and highly-robust TCP/HTTP \
 homepage            http://haproxy.1wt.eu/
 master_sites        ${homepage}download/${branch}/src/
 
-checksums           rmd160  ececa8cf89c2c323016ba043ce5fc7e609b49efd \
-                    sha256  84408ec1e37bf308c6b45ae3c7e66f2a9d2f762cb689ab6d322c67bba691db62
+checksums           rmd160  de161b4c281df9b9de863e98e7eddb29d9ad65b3 \
+                    sha256  69b54be39247b4a7556b4a7d3bd90ffd4acf35799ffa7125bbadebab8e5df5b4
 
 depends_lib         port:pcre
 
@@ -51,3 +51,8 @@ platform i386 {
 
 livecheck.type      regex
 livecheck.regex     ${name}-(\[0-9.\]+)${extract.suffix}
+
+variant openssl description {add support for SSL} {
+    build.args-append USE_OPENSSL=1
+}
+
