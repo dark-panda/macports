@@ -4,7 +4,7 @@
 PortSystem          1.0
 
 name                haproxy
-version             1.5.2
+version             1.5.3
 set branch          [join [lrange [split ${version} .] 0 1] .]
 categories          net
 platforms           darwin
@@ -25,8 +25,8 @@ long_description    HAproxy is a high-performance and highly-robust TCP/HTTP \
 homepage            http://haproxy.1wt.eu/
 master_sites        ${homepage}download/${branch}/src/
 
-checksums           rmd160  f4496a84fe7990511f23c40d736d883e40ecaf9c \
-                    sha256  f9cc9fcb30e5d998d4690331a0183a6970ca768833cc0ac68ad2a89600403d53
+checksums           rmd160  674dc6ae76cf80c444e69e740c75bf40a360a808 \
+                    sha256  0dad3680e0c3592a165781e1cc9b0d5cc88d8eaa8ebf59719c9bd62bb9c1cd9e
 
 depends_lib         port:pcre
 
