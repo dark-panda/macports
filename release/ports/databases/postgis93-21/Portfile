@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           archcheck 1.0
 
 name                postgis93-21
-version             2.1.3
+version             2.1.4
 revision            0
 categories          databases
 platforms           darwin
@@ -30,9 +30,9 @@ patchfiles          patch-loader-Makefile.in.diff \
 distname            postgis-${version}
 distfiles           postgis-${version}.tar.gz
 
-checksums           md5     104e4468429ea0882259fc268c62d6c7 \
-                    sha1    984bc23603af8c66f4f0b2d3aa7bb75b4c9e3191 \
-                    rmd160  d42d962a1bbc077faa3f8a5b6934fc3b84a96811
+checksums           md5     6f7bacc0205859dafdfe545db1b892ca \
+                    sha1    9c52b056f29e2f3dd7a9a8c38e2a7532cdfc6b60 \
+                    rmd160  a72958390693a573716aede1de99cc13541a27ab
 
 depends_build \
     port:docbook-xsl \
