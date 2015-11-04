@@ -29,7 +29,7 @@
  	}
 
 +	/* XXX - Macports - Add the `X-Request-Start` header. */
-+	if (s->fe->options2 & PR_O2_X_REQUEST_START) {
++	if (sess->fe->options2 & PR_O2_X_REQUEST_START) {
 +		char tmpbuf[40];
 +		unsigned long mstime = (now.tv_sec * 1000) + (now.tv_usec / 1000);
 +		snprintf(tmpbuf, sizeof(tmpbuf), "X-Request-Start: %ld", mstime);
