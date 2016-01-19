@@ -1,0 +1,25 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: $
+
+PortSystem              1.0
+PortGroup               github 1.0
+PortGroup               php 1.1
+
+github.setup            dark-panda php-geos-native master
+name                    php-geos-native
+platforms               darwin
+maintainers             openmaintainer
+license                 PHP-3.01
+
+php.branches            5.3 5.4 5.5 5.6
+
+distname                php-geos-native-${version}
+
+description             PHP extension for interfacing with the GEOS library
+
+long_description        ${description}
+
+checksums               rmd160  0b7100483429414990db843b3d962108d47df215 \
+                        sha256  a9bc32497db172c77f7983e25290406c55eb5b66f92dcff491d0a388f8679855
+
+use_parallel_build      yes
