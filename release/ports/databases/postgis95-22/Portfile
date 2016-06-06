@@ -82,6 +82,11 @@ post-patch {
 }
 depends_lib-append  port:postgresql${postgresql_version}
 
+variant sfcgal              description {Uses SFCGAL for 3D queries} {
+    depends_lib-append      port:sfcgal
+    configure.args-append   --with-sfcgal=${prefix}/bin/sfcgal-config
+}
+
 archcheck.files-append \
     lib/postgresql${postgresql_version}/libpq.dylib
 
