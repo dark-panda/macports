@@ -78,7 +78,7 @@ post-patch {
          PGSQL_SHAREDIR=${destroot}${prefix}/share/postgresql${postgresql_version}
     }
 
-    #reinplace -E "/doc .*install\\\$/s|\\\$| \[join \${args}\]|" ${worksrcpath}/GNUmakefile
+    reinplace -E "s|^DOCS =|#DOCS =|g" ${worksrcpath}/extensions/address_standardizer/Makefile.in
 }
 depends_lib-append  port:postgresql${postgresql_version}
 
