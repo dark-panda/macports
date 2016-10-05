@@ -19,7 +19,7 @@ description             PHP extension for interfacing with the GEOS library
 
 long_description        ${description}
 
-checksums               rmd160  0b7100483429414990db843b3d962108d47df215 \
-                        sha256  a9bc32497db172c77f7983e25290406c55eb5b66f92dcff491d0a388f8679855
+checksums               rmd160  8d75663e95c2d01542022188778b00a183cdcc10 \
+                        sha256  513a3b29cc38dd7f1887709ae8996b3cb0c864067399fb71a3993281f4f30c6a
 
 use_parallel_build      yes
