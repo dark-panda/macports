@@ -3,7 +3,7 @@
 PortSystem       1.0
 
 name             geos
-version          3.5.0
+version          3.6.1
 license          LGPL-2.1
 categories       science
 platforms        darwin
@@ -19,8 +19,8 @@ homepage         http://trac.osgeo.org/geos/
 master_sites     http://download.osgeo.org/geos/
 use_bzip2        yes
 
-checksums           sha1    142be1db41cb7c62afb9f6d3304769a39dd0b5ac \
-                    rmd160  273d665246b88beb051d4b5d83e9229eaf559bb3
+checksums           sha1    2eadda190aa625d2923137691ffec218687ed3b0 \
+                    rmd160  31344488c61d3268880acfcb07ba63affb3f46b7
 
 if {${configure.compiler} == "llvm-gcc-4.2"} {
     configure.compiler clang
@@ -29,7 +29,7 @@ if {${configure.compiler} == "llvm-gcc-4.2"} {
 post-destroot {
     set docdir ${prefix}/share/doc/${name}
     xinstall -d ${destroot}${docdir}
-    xinstall -m 644 -W ${worksrcpath} AUTHORS COPYING ChangeLog NEWS README \
+    xinstall -m 644 -W ${worksrcpath} AUTHORS COPYING NEWS README \
         TODO ${destroot}${docdir}
 }
 
