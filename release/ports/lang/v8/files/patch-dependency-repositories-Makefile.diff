@@ -1,0 +1,15 @@
+--- Makefile	2016-10-05 01:32:41.000000000 -0400
++++ Makefile	2016-10-05 01:31:16.000000000 -0400
+@@ -430,8 +430,7 @@ grokdump: ia32.release
+ # Dependencies.
+ # Remember to keep these in sync with the DEPS file.
+ dependencies:
+-	svn checkout --force http://gyp.googlecode.com/svn/trunk build/gyp \
+-	    --revision 1685
+-	svn checkout --force \
+-	    https://src.chromium.org/chrome/trunk/deps/third_party/icu46 \
+-	    third_party/icu --revision 214189
++	mkdir -p build/gyp; \
++	curl https://chromium.googlesource.com/external/gyp/+archive/60947b8.tar.gz | tar -zxf - -C build/gyp; \
++	mkdir -p third_party/icu; \
++	curl https://chromium.googlesource.com/chromium/third_party/icu46/+archive/e0ebdd.tar.gz | tar -zxf - -C third_party/icu
