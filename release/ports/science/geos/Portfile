@@ -3,7 +3,7 @@
 PortSystem       1.0
 
 name             geos
-version          3.6.1
+version          3.6.2
 license          LGPL-2.1
 categories       science
 platforms        darwin
@@ -19,8 +19,9 @@ homepage         http://trac.osgeo.org/geos/
 master_sites     http://download.osgeo.org/geos/
 use_bzip2        yes
 
-checksums           sha1    2eadda190aa625d2923137691ffec218687ed3b0 \
-                    rmd160  31344488c61d3268880acfcb07ba63affb3f46b7
+checksums           sha1    b9d0578c6b5308cf05a3dd8873802f9862c04291 \
+                    rmd160  6efa217f1bfe5bb4a3de82e1899a97b3a8c90b9e \
+                    sha256  045a13df84d605a866602f6020fc6cbf8bf4c42fb50de237a08926e1d7d7652a
 
 if {${configure.compiler} == "llvm-gcc-4.2"} {
     configure.compiler clang
