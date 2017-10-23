@@ -1,0 +1,63 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=portfile:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+github.setup        junegunn fzf 0.17.0-2
+
+categories          sysutils
+platforms           darwin
+license             MIT
+
+maintainers         {gmail.com:justrafi @rafi} openmaintainer
+description         A command-line fuzzy finder
+long_description    ${name}: ${description}
+
+supported_archs     noarch
+checksums           rmd160  86d0553896bf4103769bc408ccba6f86d6c4793e \
+                    sha256  514509eadbe2e84ce423b5ee9c6dad8d72f711555695e0bbdc5a3fa1d09b4fc3
+
+depends_build   port:go
+use_configure   no
+
+build.env       GOPATH="${workpath}"
+
+variant vim description {Vim integration} {}
+variant tmux description {Tmux integration helper command} {}
+variant bash_completion description {Fuzzy completion for bash} {
+    depends_run-append path:etc/bash_completion:bash-completion
+}
+variant key_bindings description {Key bindings for command line} {
+    depends_run-append path:etc/bash_completion:bash-completion
+}
+
+post-extract {
+    reinplace -E {s|/bin/bash|/usr/bin/env\ bash|} ${worksrcpath}/shell/completion.bash
+}
+
+destroot {
+    xinstall -d ${destroot}${prefix}/bin
+    xinstall -m 755 ${worksrcpath}/target/${name}-darwin_amd64 ${destroot}${prefix}/bin/${name}
+
+    if {[variant_isset tmux]} {
+        xinstall -m 755 ${worksrcpath}/bin/${name}-tmux ${destroot}${prefix}/bin
+    }
+
+    if {[variant_isset bash_completion] || [variant_isset key_bindings]} {
+        set completion-dir ${destroot}${prefix}/share/bash-completion/completions
+        xinstall -d ${completion-dir}
+    }
+
+    if {[variant_isset bash_completion]} {
+        xinstall -m 644 ${worksrcpath}/shell/completion.bash ${completion-dir}/${name}
+    }
+
+    if {[variant_isset key_bindings]} {
+        xinstall -m 644 ${worksrcpath}/shell/key-bindings.bash ${completion-dir}/${name}-key-bindings
+    }
+
+    if {[variant_isset vim]} {
+        set vim-dir ${destroot}${prefix}/share/vim/vim80
+        xinstall -d ${vim-dir}/plugin
+        xinstall -m 644 ${worksrcpath}/plugin/${name}.vim ${vim-dir}/plugin
+    }
+}
