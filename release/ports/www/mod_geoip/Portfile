@@ -4,7 +4,7 @@
 PortSystem 1.0
 
 name                mod_geoip
-version             1.2.7
+version             1.2.10
 categories          www
 license             Apache
 platforms           darwin
@@ -13,21 +13,24 @@ description         Apache 2 module for detecting location by IP address.
 long_description    ${description}
 
 homepage            http://www.maxmind.com/app/mod_geoip
-master_sites        http://www.maxmind.com/download/geoip/api/mod_geoip2/
+master_sites        https://github.com/maxmind/geoip-api-mod_geoip2/archive
 
-distfiles           ${name}2_${version}.tar.gz
+#distfiles           ${name}2_${version}.tar.gz
+distname            ${version}
 
-checksums           md5     76514ad0e8adb8cd8231c5e3646d03fd \
-                    sha1    0b23848d459415d979171efbb635e67568ae2816 \
-                    rmd160  53892855810bd6a6578a3ae82d6a3acaf13173d3
+checksums           md5     c2b564cfd2bcb8527304f20818f29443 \
+                    sha1    604078540aff945a659c3b7840a4cd690ba53750 \
+                    rmd160  c318199da234bd5555170b613c0cecf201a2ea26 \
+                    sha256  291f7677581161e35dac0175a69b0b28d94edd9802bdd79d4ed68057852a5035
 
 depends_lib         port:apache2 \
                     port:libgeoip
 
 use_configure       no
 worksrcdir          ${name}2_${version}
+worksrcdir          geoip-api-mod_geoip2-${version}
 
-build.cmd           ${prefix}/apache2/bin/apxs
+build.cmd           ${prefix}/bin/apxs
 build.args          -I ${prefix}/include \
                     -L ${prefix}/lib \
                     -l GeoIP \
@@ -37,14 +40,14 @@ build.target
 destroot.violate_mtree yes
 
 destroot {
-    xinstall -m 755 -d ${destroot}${prefix}/apache2/modules \
-        ${destroot}${prefix}/apache2/conf/extra \
+    xinstall -m 755 -d ${destroot}${prefix}/lib/apache2/modules \
+        ${destroot}${prefix}/etc/apache2/extra \
         ${destroot}${prefix}/share/doc/${name}
     xinstall -m 644 ${worksrcpath}/.libs/${name}.so \
-        ${destroot}${prefix}/apache2/modules
+        ${destroot}${prefix}/lib/apache2/modules
     xinstall -m 644 -c ${filespath}/httpd-geoip.conf \
-        ${destroot}${prefix}/apache2/conf/extra
-    xinstall -m 644 -W ${worksrcpath} Changes README \
+        ${destroot}${prefix}/etc/apache2/extra
+    xinstall -m 644 -W ${worksrcpath} Changes README.md \
         ${destroot}${prefix}/share/doc/${name}
 }
 
@@ -53,6 +56,6 @@ post-install {
     ui_msg "# To enable mod_geoip add"
     ui_msg "#  LoadModule geoip_module modules/mod_geoip.so"
     ui_msg "# to your apache2 config file:"
-    ui_msg "#  ${prefix}/apache2/conf/httpd.conf"
+    ui_msg "#  ${prefix}/etc/apache2/conf/httpd.conf"
     ui_msg "########################################################"
 }
