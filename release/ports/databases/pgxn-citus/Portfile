@@ -1,0 +1,55 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: $
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+name                pgxn-citus
+set short_version   8.2.1
+github.setup        citusdata citus v${short_version}
+categories          database
+platforms           darwin
+license             AGPL-3.0
+
+description         Citus horizontally scales PostgreSQL across commodity \
+                    servers using sharding and replication
+long_description    ${description}
+
+master_sites        https://github.com/citusdata/citus/archive
+
+distname            ${version}
+worksrcdir          citus-${short_version}
+github.tarball_from releases
+
+checksums           rmd160  9862ab3747ebef6208626d9fd16c1cb4f883b7ee \
+                    sha256  1872de7d516634ab434783dcaec1329192fd8d08dfead776b41022aa38bac196 \
+                    size    2781014
+
+use_configure       yes
+
+set postgresql_suffixes {11 10 93 94 95 96}
+
+set postgresql_variants {}
+
+foreach suffix ${postgresql_suffixes} {
+    lappend postgresql_variants postgresql${suffix}
+}
+
+foreach suffix ${postgresql_suffixes} {
+    set vrt postgresql${suffix}
+    set pgversion [string index ${suffix} 0].[string index ${suffix} 1]
+    set index [lsearch -exact ${postgresql_variants} ${vrt}]
+    set conf [lreplace ${postgresql_variants} ${index} ${index}]
+
+    variant ${vrt} \
+        conflicts ${conf} \
+        description "Use PostgreSQL ${pgversion}" \
+        "
+        depends_lib-append      port:${vrt}
+        configure.args-append   --libdir=${prefix}/lib/${vrt} \
+            --with-pgconfig=${prefix}/lib/${vrt}/bin/pg_config
+        build.args-append       \
+            PGSQL_DOCDIR=${destroot}${prefix}/share/doc/${vrt} \
+            PGSQL_MANDIR=${destroot}${prefix}/share/man
+        "
+}
