@@ -1,0 +1,56 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: $
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+name                pgxn-kmeans
+set short_version   1.1.0
+github.setup        umitanuki kmeans-postgresql v${short_version}
+categories          database
+platforms           darwin
+license             Permissive
+
+description         This module implements K-means clustering algorithm as \
+                    a user-defined window function in PostgreSQL. K-means \
+                    clustering is a simple way to classify data set by \
+                    N-dimension vector.
+long_description    ${description}
+
+master_sites        https://github.com/umitanuki/kmeans-postgresql/archive
+
+distname            ${version}
+worksrcdir          kmeans-postgresql-${short_version}
+github.tarball_from releases
+
+checksums           rmd160  f1a2ba0c799c48468ff1d551a3e2764364983a7b \
+                    sha256  e3a9ff3969abb00ca64b941310e4a56d9c2a5cd6ef68152c7bdab515317fd339
+
+use_configure       no
+
+set postgresql_suffixes {11 10 93 94 95 96}
+
+set postgresql_variants {}
+
+foreach suffix ${postgresql_suffixes} {
+    lappend postgresql_variants postgresql${suffix}
+}
+
+foreach suffix ${postgresql_suffixes} {
+    set vrt postgresql${suffix}
+    set pgversion [string index ${suffix} 0].[string index ${suffix} 1]
+    set index [lsearch -exact ${postgresql_variants} ${vrt}]
+    set conf [lreplace ${postgresql_variants} ${index} ${index}]
+
+    variant ${vrt} \
+        conflicts ${conf} \
+        description "Use PostgreSQL ${pgversion}" \
+        "
+        depends_lib-append      port:${vrt}
+        configure.args-append   --libdir=${prefix}/lib/${vrt} \
+            --with-pgconfig=${prefix}/lib/${vrt}/bin/pg_config
+        build.args-append       \
+            PGSQL_DOCDIR=${destroot}${prefix}/share/doc/${vrt} \
+            PGSQL_MANDIR=${destroot}${prefix}/share/man
+        "
+}
