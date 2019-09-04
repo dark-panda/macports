@@ -3,7 +3,7 @@
 PortSystem          1.0
 PortGroup           github 1.0
 
-github.setup        okbob pspg 0.1 v
+github.setup        okbob pspg 1.6.8
 
 categories          devel
 
@@ -24,8 +24,9 @@ github.tarball_from releases
 distname            ${git.branch}
 worksrcdir          pspg-${version}
 
-checksums           rmd160  702a3d3a9e712d816ce5c4a3057dd1a980ab806c \
-                    sha256  6bb323170d286b35d5f2e0d3aa48f10a3e31fa281369155a3575e75694452eb3
+checksums           rmd160  edefce3edf2b8d2b0e35c43c1d6bc935cfe14002 \
+                    sha256  f2488ec0b600752a4896fe50ce8e5bde08e0e79af38fd86b7935cdb1240e2c9f \
+                    size    1017316
 
 depends_build       port:ncurses
 
