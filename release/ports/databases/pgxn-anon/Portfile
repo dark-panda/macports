@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           gitlab 1.0
 
 name                pgxn-anon
-set short_version   0.7.1
+set short_version   0.8.0
 categories          database
 platforms           darwin
 license             PostgreSQL
@@ -20,9 +20,9 @@ gitlab.setup        dalibo  postgresql_anonymizer ${short_version}
 distname            ${version}
 worksrcdir          postgresql_anonymizer-${short_version}
 
-checksums           rmd160  bcc6de9d4053fbf9f2f556517c844ff38eb2b7f5 \
-                    sha256  4e9a0d0827f63922087bc20413729769f2d5744815f34d3ec9bc2e452f9b3f42 \
-                    size    13306399
+checksums           rmd160  27f3bf15596516018e4b2cd14d957421e28f0a3c \
+                    sha256  1e354620893e78e78118dcad9b10c5723effff548914a3dd698178da65f93f2a \
+                    size    13310534
 
 use_configure       no
 
