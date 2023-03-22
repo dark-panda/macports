@@ -1,0 +1,54 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: $
+
+PortSystem          1.0
+PortGroup           gitlab 1.0
+
+name                pgxn-faker
+set short_version   0.5.3
+categories          database
+platforms           darwin
+license             PostgreSQL
+
+description         postgresql_faker is a PostgreSQL extension based on the awesome \
+                    Python Faker Library. This is useful to generate random-but-meaningful \
+                    datasets for functionnal testing, anonymization, training data, etc...
+long_description    ${description}
+
+gitlab.setup        dalibo  postgresql_faker ${short_version}
+
+distname            ${version}
+worksrcdir          postgresql_faker-${short_version}
+
+checksums           rmd160  22e38d569a4ba94f4d9d454cb145eccdffa1dcd5 \
+                    sha256  e8ae9c99d4a5eef133aa77e813cee404a50f5edab60fc2d09ef6c27aaedbc608 \
+                    size    147580
+
+use_configure       no
+
+set postgresql_suffixes {14 13 12 11 10}
+
+set postgresql_variants {}
+
+foreach suffix ${postgresql_suffixes} {
+    lappend postgresql_variants postgresql${suffix}
+}
+
+foreach suffix ${postgresql_suffixes} {
+    set vrt postgresql${suffix}
+    set pgversion [string index ${suffix} 0].[string index ${suffix} 1]
+    set index [lsearch -exact ${postgresql_variants} ${vrt}]
+    set conf [lreplace ${postgresql_variants} ${index} ${index}]
+
+    variant ${vrt} \
+        conflicts ${conf} \
+        description "Use PostgreSQL ${pgversion}" \
+        "
+        depends_lib-append      port:${vrt}
+        configure.args-append   --libdir=${prefix}/lib/${vrt} \
+            --with-pgconfig=${prefix}/lib/${vrt}/bin/pg_config
+        build.args-append       \
+            PGSQL_DOCDIR=${destroot}${prefix}/share/doc/${vrt} \
+            PGSQL_MANDIR=${destroot}${prefix}/share/man
+        "
+}
